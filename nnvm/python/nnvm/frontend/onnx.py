@@ -77,7 +77,8 @@ class Pool(OnnxOpConverter):
             op_name=dimension_picker(cls.name),
             transforms={
                 'kernel_shape': 'pool_size',
-                'pads': ('padding', (0, 0), revert_caffe2_pad)
+                #'pads': ('padding', (0, 0), revert_caffe2_pad)
+                'pads': 'padding'
             },
             # very weird attributes here in onnx, force check
             ignores=['dilations'],
