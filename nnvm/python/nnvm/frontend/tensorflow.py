@@ -128,7 +128,7 @@ def _elemwise_n(name):
     """Elementwise operation on N inputs by doing N-1 elementwise wise operations on two inputs"""
     def _impl(inputs, attr, *args):
         assert len(inputs) >= 2, "Elementwise N operation takes at least 2 inputs, {} given".format(len(inputs))
-        print(inputs)
+        
         op_name = _math_name_picker(name)(attr)
         syms = [get_nnvm_op(op_name)(*inputs[:2])]
         
