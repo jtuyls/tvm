@@ -124,6 +124,22 @@ def _argx(func, func_name):
         return func(inputs[0], axis=axis_input_vlaue, keepdims=False)
     return _impl
 
+def _elemwise_n(name):
+    """Elementwise operation on N inputs by doing N-1 elementwise wise operations on two inputs"""
+    def _impl(inputs, attr, *args):
+        assert len(inputs) >= 2, "Elementwise N operation takes at least 2 inputs, {} given".format(len(inputs))
+        print(inputs)
+        op_name = _math_name_picker(name)(attr)
+        syms = [get_nnvm_op(op_name)(*inputs[:2])]
+        
+        for idx in range(2,len(inputs)):
+            sym = get_nnvm_op(op_name)(*[syms[-1],inputs[idx]])
+            syms.append(sym)
+
+        return _sym.Group(syms)
+    return _impl 
+
+
 def _elemwise(name):
     def _impl(inputs, attr, *args):
         assert len(inputs) == 2, "{} take 2 inputs, {} given".format(name, len(inputs))
@@ -933,6 +949,7 @@ _convert_map = {
     'Identity'                          : _identity(),
     'MatMul'                            : _matmul(),
     'MaxPool'                           : _pooling('max_pool'),
+    'AddN'                              : _elemwise_n('add'),
     'Add'                               : _elemwise('add'),
     'Sub'                               : _elemwise('sub'),
     'Mul'                               : _elemwise('mul'),
