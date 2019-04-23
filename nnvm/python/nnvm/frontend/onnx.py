@@ -69,9 +69,12 @@ class Elemwise(OnnxOpConverter):
     def _math_name_picker(cls, suffix):
 
         def _impl(attr):
-            if attr.get('broadcast', 0):
-                return 'broadcast_' + suffix
-            return 'elemwise_' + suffix
+            # if attr.get('broadcast', 0):
+            #     return 'broadcast_' + suffix
+            # return 'elemwise_' + suffix
+            # Always do broadcasting operation as ONNX math operations support broadcasting: 
+            #   https://github.com/onnx/onnx/blob/master/docs/Broadcasting.md
+            return 'broadcast_' + suffix
 
         return _impl
 
