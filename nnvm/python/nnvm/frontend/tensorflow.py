@@ -252,7 +252,7 @@ def _conv(opname):
 
 
         if opname == 'depthwise':
-            attr['groups'] = attr['channels']
+            attr['groups'] = attr['channels'] // depth_mult
 
         # Fix padding
         attr['padding'] = attr['padding'].decode("utf-8")
@@ -298,7 +298,7 @@ def _conv(opname):
             if opname == 'conv':
                 attr['kernel_layout'] = 'HWIO' if attr['data_format'] == 'NHWC' else 'OIHW'
             else:
-                attr['kernel_layout'] = 'HWOI' if attr['data_format'] == 'NHWC' else 'OIHW'
+                attr['kernel_layout'] = 'HWIO' if attr['data_format'] == 'NHWC' else 'OIHW'
 
         out = AttrCvt(
             op_name=_dimension_picker('conv'),
