@@ -149,7 +149,7 @@ Hardware setup and docker build
    ::
 
 
-      cd incubator-tvm.git
+      cd incubator-tvm
       mkdir build
       cp cmake/config.cmake build
       cd build  
@@ -158,11 +158,10 @@ Hardware setup and docker build
       cmake ..
       make -j$(nproc)
    
-9.  Add TVM to Python path
-    :: 
-   
-   
-      export PYTHONPATH=$PYTHONPATH:{PATH-TO-INCUBATOR-TVM}/python
+9.  Install TVM
+    ::
+      cd incubator-tvm/python
+      pip3 install -e . --user
       
 Edge (DPUCZDX8G)
 ^^^^^^^^^^^^^^^^
@@ -235,6 +234,11 @@ Host setup and docker build
    echo set\(USE_VITIS_AI ON\) >> config.cmake
    cmake ..
    make -j$(nproc)
+   
+5. Install TVM
+::
+    cd incubator-tvm/python
+    pip3 install -e . --user
 
 Edge requirements
 ^^^^^^^^^^^^^^^^^
@@ -312,11 +316,11 @@ interface between TVM and Vitis-AI tools.
    cmake ..     
    make
    
-4. Add TVM to Python path
+4. Install TVM
 ::
-   
-   
-   export PYTHONPATH=$PYTHONPATH:{PATH-TO-INCUBATOR-TVM}/python
+      cd incubator-tvm/python
+      pip3 install -e . --user
+
 5. Check whether the setup was successful in the Python shell:
 ::
 
